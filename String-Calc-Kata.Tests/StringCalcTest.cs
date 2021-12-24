@@ -44,5 +44,14 @@ namespace String_Calc_Kata.Tests
 
             Assert.Equal(13, result);
         }
+
+        [Fact]
+        public void Return6WithGivenInput1delimte2comma3()
+        {
+            var calculator = new StringCalculator();
+            var result = calculator.Add("1\n2,3");
+
+            Assert.Equal(6, result);
+        }
     }
 }
