@@ -26,13 +26,23 @@ namespace String_Calc_Kata.Tests
         }
 
         [Fact]
-        public void Return3GivenStringWithIs1Comma2()
+        public void Return3GivenStringWithComma1_2()
         {
             var calculator = new StringCalculator();
 
             var result = calculator.Add("1,2");
 
             Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public void Return13GivenStringWithMultipleComma1_2_5_5()
+        {
+            var calculator = new StringCalculator();
+
+            var result = calculator.Add("1,2,5,5");
+
+            Assert.Equal(13, result);
         }
     }
 }
