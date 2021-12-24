@@ -62,5 +62,31 @@ namespace String_Calc_Kata.Tests
 
             Assert.Equal(3, result);
         }
+
+        [Fact]
+        public void GivenNegativeNumberThrowException()
+        {
+            var calculator = new StringCalculator();
+
+            Action action = () => calculator.Add("-1");
+
+            var ex = Assert.Throws<Exception>(action);
+
+            Assert.Equal("Negatives not allowed: -1", ex.Message);
+        }
+
+
+        [Fact]
+        public void GivenMultipleNegativeNumberThrowException()
+        {
+            var calculator = new StringCalculator();
+
+            Action action = () => calculator.Add("-1,6,-8");
+
+            var ex = Assert.Throws<Exception>(action);
+
+            Assert.Equal("Negatives not allowed: -1,-8", ex.Message);
+        }
+
     }
 }
