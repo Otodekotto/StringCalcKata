@@ -38,6 +38,7 @@ namespace String_Calc_Kata
 
 
             var result = numberList
+                .Where(n => n <= 1000)
                 .Sum();
 
             return result;

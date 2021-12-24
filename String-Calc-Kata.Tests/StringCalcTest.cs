@@ -88,5 +88,13 @@ namespace String_Calc_Kata.Tests
             Assert.Equal("Negatives not allowed: -1,-8", ex.Message);
         }
 
+        [Fact]
+        public void IgnoreNumberLargerThan1000()
+        {
+            var calculator = new StringCalculator();
+            var result = calculator.Add("2,1001");
+
+            Assert.Equal(2, result);
+        }
     }
 }
