@@ -8,41 +8,81 @@ namespace String_Calc_Kata
     {
         public object Add(string numbers)
         {
-            if (String.IsNullOrEmpty(numbers)) return 0;
+            int result;
 
-            var delimiters = new List<char> { ',', '\n' };
-
-            string numberString = numbers;
-            if (numberString.StartsWith("//"))
+            if (string.IsNullOrEmpty(numbers))
             {
-                var splitInput = numberString.Split('\n');
-                var newDelimiter = splitInput.First().Trim('/');
-                numberString = String.Join('\n', splitInput.Skip(1));
-
-                delimiters.Add(Convert.ToChar(newDelimiter));
+                Console.WriteLine(0);
+                return 0;
             }
 
-            var numberList = numberString.Split(delimiters.ToArray())
-                .Select(s => int.Parse(s));
+            if (numbers.StartsWith("//"))
+            {
+                result = CalculateWithSpecifiedDelimiter(numbers);
+            }
+            else
+            {
+                result = Calculate(numbers);
+            }
+            Console.WriteLine(result);
+            return result;
+        }
 
-            var negatives = numberList
-                .Where(n => n < 0);
+        private static int CalculateWithSpecifiedDelimiter(string input)
+        {
+            var delimiter = GetDelimiter(input);
+            input = input.Substring(input.IndexOf("\n"));
+            return Calculate(input, delimiter);
+        }
 
+        private static int Calculate(string input)
+        {
+            return Calculate(input, GetDelimiter(input));
+        }
+
+        private static int Calculate(String input, string[] delimiter)
+        {
+            var values = input.Split(delimiter, StringSplitOptions.None);
+            var intValues = values.Select(x => int.Parse(x)).Where(x => x < 1001);
+
+            CheckForNegativeNumbers(intValues);
+
+
+            return intValues.Sum();
+        }
+
+        private static void CheckForNegativeNumbers(IEnumerable<int> intValues)
+        {
+            var negatives = intValues.Where(x => x < 0).ToList();
             if (negatives.Any())
             {
                 string negativeString = String.Join(',', negatives
                     .Select(n => n.ToString()));
                 throw new Exception($"Negatives not allowed: {negativeString}");
             }
+        }
 
+        private static string[] GetDelimiter(String input)
+        {
+            string[] defaultDelimiter = new string[] { ",", "\n" };
+            if (input.StartsWith("//["))
+            {
+                return GetMultipleDelimiters(input);
+            }
+            if (input.StartsWith("//"))
+            {
+                return new string[] { input[2].ToString() };
+            }
 
+            return defaultDelimiter;
+        }
 
-            var result = numberList
-                .Where(n => n <= 1000)
-                .Sum();
-
-            return result;
-
+        public static string[] GetMultipleDelimiters(String input)
+        {
+            input = input.TrimStart("/[".ToCharArray());
+            input = input.Split(new[] { "]\n" }, StringSplitOptions.None).First();
+            return input.Split(new[] { "][" }, StringSplitOptions.None);
         }
     }
+
 }

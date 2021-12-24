@@ -96,5 +96,33 @@ namespace String_Calc_Kata.Tests
 
             Assert.Equal(2, result);
         }
+
+        [Fact]
+        public void DelimiterOfAnyLenght()
+        {
+            var calculator = new StringCalculator();
+            var result = calculator.Add("//[***]\n1***2***3");
+
+            Assert.Equal(6, result); 
+        }
+
+
+        [Fact]
+        public void ReturnSumGivenTheStringHasLengthtyDelimitor()
+        {
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("//[Tedo$]\n3Tedo$1Tedo$5");
+
+            Assert.Equal(9, result);
+        }
+
+        [Fact]
+        public void ReturnSumGivenTheStringHasMultipleDelimiterOfMultipleLenght()
+        {
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("//[**][%%]\n1**2%%3");
+
+            Assert.Equal(6, result);
+        }
     }
 }
