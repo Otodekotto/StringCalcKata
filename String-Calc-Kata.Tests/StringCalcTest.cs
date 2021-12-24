@@ -46,12 +46,21 @@ namespace String_Calc_Kata.Tests
         }
 
         [Fact]
-        public void Return6WithGivenInput1delimte2comma3()
+        public void Return6WithGivenInput1Delimitor2comma3()
         {
             var calculator = new StringCalculator();
             var result = calculator.Add("1\n2,3");
 
             Assert.Equal(6, result);
+        }
+
+        [Fact]
+        public void Return3WithGivenInputDoubleSlashSemicolonDelimitor1Semicolon2()
+        {
+            var calculator = new StringCalculator();
+            var result = calculator.Add("//;\n1;2");
+
+            Assert.Equal(3, result);
         }
     }
 }
